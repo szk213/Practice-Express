@@ -1,0 +1,12 @@
+{
+  "appenders": [
+    {
+      "type": "clustered",
+      "appenders": [
+        { "type": "console" },
+        { "type": "file", "category": "system","filename": "logs/system.log", "maxLogSize": 10000000, "backups": 10 },
+        { "type": "dateFile", "category": "access", "filename": "logs/access.log", "pattern":  "-yyyy-MM-dd" }
+      ]
+    }
+  ]
+}
