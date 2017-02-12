@@ -1,0 +1,11 @@
+{
+  "appenders": [
+    {
+      "type": "clustered",
+      "appenders": [
+        { "type": "console" },
+        { "type": "file", "filename": "log.log", "maxLogSize": 10000000, "backups": 10 }
+      ]
+    }
+  ]
+}
