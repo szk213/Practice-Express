@@ -15,6 +15,8 @@ gpgkey=https://www.mongodb.org/static/pgp/server-3.4.asc
 EOF
 
  sudo yum install -y mongodb-org
+ # Mongodbを外部に開放
+ sed -i -e "s/bindIp: 127.0.0.1/bindIp: 0.0.0.0/g" /etc/mongod.conf
  systemctl start mongod
  systemctl enable mongod
  SHELL
