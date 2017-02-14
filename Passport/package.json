@@ -21,6 +21,7 @@
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.15.2",
     "express": "^4.14.0",
+    "jsonwebtoken": "^7.3.0",
     "jwt-simple": "^0.3.1",
     "kerberos": "0.0.22",
     "log4js": "^1.1.0",
