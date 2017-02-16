@@ -1,3 +1,7 @@
+'use strict';
+
+import Account from "./app/models/Account";
+
 var express     = require('express');
 var app         = express();
 var bodyParser  = require('body-parser');
@@ -7,7 +11,7 @@ var passport	= require('passport');
 var config      = require('./config/database'); // get db config file
 var User        = require('./app/models/user'); // get the mongoose model
 var port        = process.env.PORT || 8080;
-var jwt         = require('jwt-simple');
+var jwt         = require('jwt-simple')
 
 // get our request parameters
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -45,12 +49,13 @@ apiRoutes.post('/signup', function(req, res) {
   if (!req.body.name || !req.body.password) {
     res.json({success: false, msg: 'Please pass name and password.'});
   } else {
-    var newUser = new User({
+    var newAccount = new Account({
+      mail: req.body.mail,
       name: req.body.name,
       password: req.body.password
     });
     // save the user
-    newUser.save(function(err) {
+    newAccount.save(function(err) {
       if (err) {
         return res.json({success: false, msg: 'Username already exists.'});
       }
@@ -59,14 +64,25 @@ apiRoutes.post('/signup', function(req, res) {
   }
 });
 
+apiRoutes.post('/signin', passport.authenticate('local'), (req, res) => {
+
+});
+
+app.post('/login',
+    passport.authenticate('local'),
+    function(req, res){
+      // 認証成功するとここが実行される
+    }
+);
+
 // route to authenticate a user (POST http://localhost:8080/api/authenticate)
 apiRoutes.post('/authenticate', function(req, res) {
-  User.findOne({
-    name: req.body.name
-  }, function(err, user) {
+  Account.findOne({
+    mail: req.body.mail
+  }, function(err, account) {
     if (err) throw err;
 
-    if (!user) {
+    if (!account) {
       res.send({success: false, msg: 'Authentication failed. User not found.'});
     } else {
       // check if password matches
