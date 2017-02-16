@@ -50,4 +50,4 @@ AccountSchema.methods.verify = function (planePassword, cb) {
   });
 };
 
-module.exports = mongoose.model('User', UserSchema);
+module.exports = mongoose.model('Account', AccountSchema);
