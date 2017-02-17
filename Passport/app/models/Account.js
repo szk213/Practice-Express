@@ -6,14 +6,15 @@ var bcrypt = require('bcryptjs');
 
 // set up a mongoose model
 var AccountSchema = new Schema({
-  mail: {
+  name: {
     type: String,
     unique: true,
     required: true
   },
-  name: {
-    type: String,
-    required: true
+  mail: {
+      type: String,
+      unique: true,
+      required: true
   },
   password: {
     type: String,
@@ -22,6 +23,7 @@ var AccountSchema = new Schema({
 });
 
 AccountSchema.pre('save', function (next) {
+  console.log('saveきた！');
   var user = this;
   if (this.isModified('password') || this.isNew) {
     bcrypt.genSalt(10, function (err, salt) {
@@ -42,6 +44,7 @@ AccountSchema.pre('save', function (next) {
 });
 
 AccountSchema.methods.verify = function (planePassword, cb) {
+  console.log('検証きた！');
   bcrypt.compare(planePassword, this.password, function (err, isMatch) {
     if (err) {
       return cb(err);

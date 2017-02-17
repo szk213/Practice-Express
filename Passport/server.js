@@ -1,6 +1,7 @@
 'use strict';
 
 import Account from "./app/models/Account";
+import './authentication/Signin'
 
 var express     = require('express');
 var app         = express();
@@ -64,16 +65,13 @@ apiRoutes.post('/signup', function(req, res) {
   }
 });
 
-apiRoutes.post('/signin', passport.authenticate('local'), (req, res) => {
+// apiRoutes.post('/signin', (req, res) => {
+//     res.json({success: true, msg: 'signinできたよ！'});
+// });
 
+apiRoutes.post('/signin', passport.authenticate('json'), (req, res) => {
+    res.json({success: true, msg: 'signinできたよ！'});
 });
-
-app.post('/login',
-    passport.authenticate('local'),
-    function(req, res){
-      // 認証成功するとここが実行される
-    }
-);
 
 // route to authenticate a user (POST http://localhost:8080/api/authenticate)
 apiRoutes.post('/authenticate', function(req, res) {
